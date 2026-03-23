@@ -1,2 +1,2 @@
 # Gale-Shapley-Random
-Performs Gale-Shapley algorithm to find stable matching on randomized preference lists and groups. 
+Performs Gale-Shapley algorithm to find stable matching on randomized preference lists and groups. Takes an input list, shuffles it, and splits it into two even sized groups. (No odd inputs, please! manually deal with those later) Sets preference lists to be the other group, and randomizes those too. Follow instructions to run the algorithm, which exports to a CSV file with names alphabetically ordered. Fun! 
