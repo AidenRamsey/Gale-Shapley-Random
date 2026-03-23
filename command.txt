@@ -1,0 +1,1 @@
+g++ -o main main.cpp graph.cpp util.cpp -std=c++17
