@@ -2,15 +2,10 @@
 //edges are optional, I'll code them without the thing now. 
 //stable matching! 
 
-//deal with even number of people later 
-//segmentation fault if it is an odd number of people! yippee! 
-
 
 Matchlist gale_shapley(std::vector<Vertex> vertexlist, Edge edgelist) {
-// input the vertices, shuffle their preference lists. 
-//shuffle vertexlist, split in half. 
-    //std::cout << "---------inside function---------------" << std::endl; 
-    //std::cout << "shuffling vertex list" << std::endl;
+    // input the vertices, shuffle their preference lists. 
+    //shuffle vertexlist, split in half. 
     std::random_device rd;
     std::mt19937 g(rd());
     std::shuffle(vertexlist.begin(), vertexlist.end(), g); //shuffled list 
@@ -38,8 +33,8 @@ Matchlist gale_shapley(std::vector<Vertex> vertexlist, Edge edgelist) {
     for (unsigned int j = length; j < vertexlist.size(); ++j) {
         second_group.push_back(vertexlist[j]);
     }
-    //off by one? 
-   // std::cout << "setting preference lists" << std::endl; 
+    
+ 
     for (unsigned int i = 0; i < length; ++i) {//add to the thing here ) 
         
         second_group[i].preference_list = first_group; 
@@ -47,8 +42,8 @@ Matchlist gale_shapley(std::vector<Vertex> vertexlist, Edge edgelist) {
     for (unsigned int i = 0; i < length; ++i) {
         first_group[i].preference_list = second_group; 
     }
+
     //shuffle preference lists 
-   // std::cout << "shuffling preference lists" << std::endl; 
     for (unsigned int k = 0; k < length; ++k) {
         std::shuffle(first_group[k].preference_list.begin(), first_group[k].preference_list.end(), g); 
     }
@@ -58,8 +53,7 @@ Matchlist gale_shapley(std::vector<Vertex> vertexlist, Edge edgelist) {
     
     std::vector<std::pair<Vertex, Vertex>> matchlist; 
     std::vector<std::pair<Vertex, Vertex>> currentTargets; 
-    unsigned int response = 0; // 1 = no, 0 = maybe
-    //std::cout << "enter main loop " << std::endl; 
+    unsigned int response = 0; // increment if ANY choosee is rejected. 
     while (true) {  
         //pick next group of the stuff
         for (Vertex two : second_group) {
@@ -97,10 +91,7 @@ Matchlist gale_shapley(std::vector<Vertex> vertexlist, Edge edgelist) {
         //Vertices along with the challengeing vertices
        
 
-        
-        
-
-        
+    
         Vertex winner_candidate; 
         std::vector<Vertex> to_reject; 
         //find the vertex with highest priority of the specific group 
@@ -126,26 +117,23 @@ Matchlist gale_shapley(std::vector<Vertex> vertexlist, Edge edgelist) {
         }
     }
         //reject everything that wasn't candidate winner, now we have a list of vectors to decrement their preference lists
-        
-       // std::cout << "removing rejections from beginning of rejected's preference list" << std::endl; //if this is too troublesome, increment? 
-        //I NEVER RESET THEIR PREFERENCE LISTS, IT ONLY HAS SO MANY BEFORE IT ERASES SOMETHING THAT DOESN'T EXIST 
     for (unsigned int i = 0; i < to_reject.size(); ++i) {
         int position = positionVector(second_group, to_reject[i]); 
-        //std::cout << "THE LINE OF DOOM AND DESPAIR" << std::endl; 
+       
         second_group[position].preference_list.erase(second_group[position].preference_list.begin()); 
         //this should successfully remove the rejected vector :) 
         response++; 
     }
-    //std::cout << "no doom and despair today" << std::endl; 
+   
         //zero sum everything, if there are no nos, then the value should be zero. 
         if (response == 0) {
             //construct match list
-          //  std::cout << "---------end of function, no rejections---------------" << std::endl;
+         
 
             return Matchlist(currentTargets);
         } else {
             //construct match list, which is current Target list
-           // std::cout << "at least one rejection" << std::endl; 
+          
             response = 0; 
             currentTargets.clear(); 
             continue; 
