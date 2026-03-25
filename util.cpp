@@ -29,7 +29,7 @@ void instructions() {
 
 }
 
-void to_csv(Matchlist matches, int week) {
+void to_csv(Matchlist matches, int week, std::string person_name) {
     std::string iteration = "matches" + std::to_string(week) + ".csv"; 
     std::ofstream file(iteration);
     //sort matches here, by first vertex in the matching, preferably
@@ -43,6 +43,12 @@ void to_csv(Matchlist matches, int week) {
         Pair pair2 = Pair(t.second, t.first); 
         to_output.push_back(pair); 
         to_output.push_back(pair2); 
+    }
+    if (person_name != "") {
+        Vertex one = Vertex(person_name);
+        Vertex two = Vertex("");
+        Pair pair3(one, two); 
+        to_output.push_back(pair3); 
     }
     std::sort(to_output.begin(), to_output.end()); 
     file << "Brother,Match\n";

@@ -22,6 +22,7 @@ int main() {
     while (true) {
         //std::cout << "resetting temp to equal the graph" << std::endl; 
         std::vector<Vertex> temp = g.graph;
+        std::string person_name = ""; 
         if (g.graph.size() % 2 != 0) {
             //std::cout << "graph has odd length" << std::endl; 
             int size = g.graph.size(); 
@@ -29,7 +30,7 @@ int main() {
             std::uniform_int_distribution<int> dist(0, size-1); 
             int discard = dist(e); 
             Vertex person = g.graph[discard]; 
-            std::string person_name = person.person_name; 
+            person_name = person.person_name; 
             std::cout << "Need to discard someone on this iteration. In this iteration, it is: " << person_name << std::endl; 
             //actually discard that person this iteration! 
             
@@ -44,12 +45,12 @@ int main() {
     if (input == "END") {
         std::cout << "THANKS FOR USING, LEAVE A 5 STAR REVIEW PLEASE" << std::endl; 
         std::cout << "----------------------------------------------" << std::endl; 
-        to_csv(matches, week); 
+        to_csv(matches, week, person_name); 
         return 0; 
     } else if (input == "RANDOM") {
         //another week/ iteration 
         std::cout << "outputing to " + std::to_string(week) + "!" << std::endl; 
-        to_csv(matches, week); 
+        to_csv(matches, week, person_name); 
         std::cout << "successfully output, checking matches again" << std::endl; 
         matches = gale_shapley(temp, e); 
         std::cout << "new set of matches done" << std::endl; //something here I would assume? I don't reset the thing. 

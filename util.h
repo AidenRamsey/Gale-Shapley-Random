@@ -9,6 +9,6 @@
 void initialize(Graph& g, std::string person_name); 
 
 
-void to_csv(Matchlist matches, int week); 
+void to_csv(Matchlist matches, int week, std::string person_name); 
 void instructions(); 
 #endif 
